@@ -21,7 +21,7 @@ interface Subject {
 export default function CursoDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const subject_id = params.subject_id as string;
+  const subject_id = params?.subject_id as string;
 
   const [subject, setSubject] = useState<Subject | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -31,6 +31,11 @@ export default function CursoDetailPage() {
   const supabase = createClient();
 
   useEffect(() => {
+    if (!subject_id) {
+      setLoading(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -71,9 +76,7 @@ export default function CursoDetailPage() {
       }
     };
 
-    if (subject_id) {
-      fetchData();
-    }
+    fetchData();
   }, [subject_id, supabase]);
 
   if (loading) {
