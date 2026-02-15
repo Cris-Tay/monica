@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BarChart3, Brain, Target, Zap, ArrowRight, BookOpen } from "lucide-react";
+import { HomeFooter } from "@/components/home-footer";
 
 export default function Home() {
   return (
@@ -166,9 +167,7 @@ export default function Home() {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer className="border-t border-gray-200 py-8 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} PAES Pro — Plataforma de práctica académica
-      </footer>
+      <HomeFooter />
     </main>
   );
 }
