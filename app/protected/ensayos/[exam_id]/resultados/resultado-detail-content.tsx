@@ -141,32 +141,32 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
   const percentage = Math.round((attempt.correct_count / totalQuestions) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-3 md:p-6 pb-20 md:pb-6">
       {/* Header */}
-      <div className="max-w-4xl mx-auto mb-8">
+      <div className="max-w-4xl mx-auto mb-6 md:mb-8">
         <button
           onClick={() => router.push('/protected/ensayos')}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold mb-6"
+          className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold mb-4 md:mb-6 text-sm md:text-base"
         >
-          <ArrowLeft className="h-5 w-5" />
+          <ArrowLeft className="h-4 md:h-5 w-4 md:w-5" />
           Volver a Ensayos
         </button>
 
         {/* Resumen Principal */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-200">
+        <div className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden border border-blue-200">
           {/* Encabezado con color */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-center text-white">
-            <h1 className="text-4xl font-bold mb-2">¡Ensayo Completado!</h1>
-            <p className="text-blue-100">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 md:p-8 text-center text-white">
+            <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2">¡Ensayo Completado!</h1>
+            <p className="text-sm md:text-base text-blue-100">
               {new Date(attempt.finished_at).toLocaleDateString('es-CL')}
             </p>
           </div>
 
           {/* Puntuación Principal */}
-          <div className="p-8 text-center border-b border-gray-200">
+          <div className="p-6 md:p-8 text-center border-b border-gray-200">
             <div className="inline-flex flex-col items-center">
-              <div className="mb-4">
-                <svg className="w-32 h-32" viewBox="0 0 100 100">
+              <div className="mb-3 md:mb-4">
+                <svg className="w-24 md:w-32 h-24 md:h-32" viewBox="0 0 100 100">
                   {/* Fondo del círculo */}
                   <circle
                     cx="50"
@@ -190,41 +190,41 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
                   />
                 </svg>
                 <div className="absolute mt-[-76px] text-center">
-                  <p className="text-4xl font-bold text-blue-600">{percentage}%</p>
-                  <p className="text-sm text-gray-600">Acierto</p>
+                  <p className="text-2xl md:text-4xl font-bold text-blue-600">{percentage}%</p>
+                  <p className="text-xs md:text-sm text-gray-600">Acierto</p>
                 </div>
               </div>
-              <p className="text-3xl font-bold text-gray-900 mt-4">
+              <p className="text-xl md:text-3xl font-bold text-gray-900 mt-4">
                 Puntaje: <span className="text-blue-600">{attempt.score_total}</span>
               </p>
-              <p className="text-gray-600 text-sm mt-2">Escala PAES (100-1000)</p>
+              <p className="text-xs md:text-sm text-gray-600 mt-2">Escala PAES (100-1000)</p>
             </div>
           </div>
 
-          {/* Estadísticas */}
-          <div className="grid grid-cols-3 gap-4 p-8 bg-blue-50">
-            <div className="text-center p-4 bg-white rounded-lg border border-green-200">
+          {/* Estadísticas - responsive grid */}
+          <div className="grid grid-cols-3 gap-2 md:gap-4 p-4 md:p-8 bg-blue-50">
+            <div className="text-center p-3 md:p-4 bg-white rounded-lg border border-green-200">
               <div className="flex justify-center mb-2">
-                <CheckCircle2 className="h-8 w-8 text-green-600" />
+                <CheckCircle2 className="h-6 md:h-8 w-6 md:w-8 text-green-600" />
               </div>
-              <p className="text-3xl font-bold text-green-600">{attempt.correct_count}</p>
-              <p className="text-sm text-gray-600 mt-1">Correctas</p>
+              <p className="text-xl md:text-3xl font-bold text-green-600">{attempt.correct_count}</p>
+              <p className="text-xs md:text-sm text-gray-600 mt-1">Correctas</p>
             </div>
 
-            <div className="text-center p-4 bg-white rounded-lg border border-red-200">
+            <div className="text-center p-3 md:p-4 bg-white rounded-lg border border-red-200">
               <div className="flex justify-center mb-2">
-                <XCircle className="h-8 w-8 text-red-600" />
+                <XCircle className="h-6 md:h-8 w-6 md:w-8 text-red-600" />
               </div>
-              <p className="text-3xl font-bold text-red-600">{attempt.incorrect_count}</p>
-              <p className="text-sm text-gray-600 mt-1">Incorrectas</p>
+              <p className="text-xl md:text-3xl font-bold text-red-600">{attempt.incorrect_count}</p>
+              <p className="text-xs md:text-sm text-gray-600 mt-1">Incorrectas</p>
             </div>
 
-            <div className="text-center p-4 bg-white rounded-lg border border-gray-300">
+            <div className="text-center p-3 md:p-4 bg-white rounded-lg border border-gray-300">
               <div className="flex justify-center mb-2">
-                <SkipForward className="h-8 w-8 text-gray-600" />
+                <SkipForward className="h-6 md:h-8 w-6 md:w-8 text-gray-600" />
               </div>
-              <p className="text-3xl font-bold text-gray-600">{attempt.omitted_count}</p>
-              <p className="text-sm text-gray-600 mt-1">Omitidas</p>
+              <p className="text-xl md:text-3xl font-bold text-gray-600">{attempt.omitted_count}</p>
+              <p className="text-xs md:text-sm text-gray-600 mt-1">Omitidas</p>
             </div>
           </div>
         </div>
@@ -232,12 +232,12 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
 
       {/* Detalle de Respuestas */}
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 text-blue-600" />
+        <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-2">
+          <BarChart3 className="h-5 md:h-6 w-5 md:w-6 text-blue-600" />
           Revisión de Respuestas
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {answers.map((answer) => {
             const question = questions.get(answer.question_id);
             if (!question) return null;
@@ -248,7 +248,7 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
             return (
               <div
                 key={answer.question_id}
-                className={`bg-white rounded-xl p-6 border-2 ${
+                className={`bg-white rounded-lg md:rounded-xl p-4 md:p-6 border-2 ${
                   isCorrect
                     ? 'border-green-200 bg-green-50'
                     : wasOmitted
@@ -257,20 +257,20 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
                 }`}
               >
                 {/* Encabezado */}
-                <div className="flex items-start gap-3 mb-4">
+                <div className="flex items-start gap-3 mb-3 md:mb-4">
                   <div className="flex-shrink-0">
                     {isCorrect ? (
-                      <CheckCircle2 className="h-6 w-6 text-green-600" />
+                      <CheckCircle2 className="h-5 md:h-6 w-5 md:w-6 text-green-600" />
                     ) : wasOmitted ? (
-                      <SkipForward className="h-6 w-6 text-gray-600" />
+                      <SkipForward className="h-5 md:h-6 w-5 md:w-6 text-gray-600" />
                     ) : (
-                      <XCircle className="h-6 w-6 text-red-600" />
+                      <XCircle className="h-5 md:h-6 w-5 md:w-6 text-red-600" />
                     )}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">{question.content}</h3>
+                    <h3 className="font-semibold text-sm md:text-base text-gray-900">{question.content}</h3>
                     <p
-                      className={`text-sm font-medium mt-1 ${
+                      className={`text-xs md:text-sm font-medium mt-1 ${
                         isCorrect
                           ? 'text-green-700'
                           : wasOmitted
@@ -288,13 +288,13 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
                 </div>
 
                 {/* Respuesta */}
-                <div className="ml-9 space-y-2 mb-4">
+                <div className="ml-8 md:ml-9 space-y-2 mb-3 md:mb-4 text-xs md:text-sm">
                   {!wasOmitted && (
                     <div>
                       <p className="text-xs font-semibold text-gray-600 mb-1">
                         Tu respuesta:
                       </p>
-                      <p className="text-sm text-gray-800 italic">{answer.selected_option}</p>
+                      <p className="text-gray-800 italic">{answer.selected_option}</p>
                     </div>
                   )}
 
@@ -303,7 +303,7 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
                       <p className="text-xs font-semibold text-green-700 mb-1">
                         Respuesta correcta:
                       </p>
-                      <p className="text-sm text-green-800 font-medium">
+                      <p className="text-green-800 font-medium">
                         {question.correct_answer}
                       </p>
                     </div>
@@ -312,7 +312,7 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
                   {/* Explicación */}
                   <div className="mt-3 pt-3 border-t border-gray-200">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Explicación:</p>
-                    <p className="text-sm text-gray-700">{question.explanation}</p>
+                    <p className="text-gray-700 text-xs md:text-sm">{question.explanation}</p>
                   </div>
                 </div>
               </div>
@@ -321,17 +321,17 @@ export function ResultadoDetailContent({ attemptId }: ResultadoDetailContentProp
         </div>
       </div>
 
-      {/* Botones finales */}
-      <div className="max-w-4xl mx-auto mt-8 flex gap-4 justify-center">
+      {/* Botones finales - Full width en móvil */}
+      <div className="max-w-4xl mx-auto mt-6 md:mt-8 flex flex-col md:flex-row gap-3 md:gap-4 justify-center">
         <button
           onClick={() => router.push('/protected/ensayos')}
-          className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+          className="flex-1 md:flex-none px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-sm md:text-base"
         >
           Ver Más Ensayos
         </button>
         <button
           onClick={() => router.push('/protected')}
-          className="px-8 py-3 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+          className="flex-1 md:flex-none px-6 md:px-8 py-3 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors text-sm md:text-base"
         >
           Ir al Dashboard
         </button>

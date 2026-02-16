@@ -292,25 +292,41 @@ export function ExamDetailContent({ examId }: ExamDetailContentProps) {
   const totalQuestions = questions.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-3 md:p-6">
+      {/* Header fijo - optimizado para móvil */}
       <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-40">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="max-w-6xl mx-auto px-3 md:px-6 py-2 md:py-4 flex items-center justify-between gap-3">
+          {/* Izquierda - Título compacto */}
+          <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
             <button
               onClick={() => router.back()}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <ArrowLeft className="h-6 w-6 text-gray-600" />
+              <ArrowLeft className="h-5 md:h-6 w-5 md:w-6 text-gray-600" />
             </button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{exam.title}</h1>
-              <p className="text-sm text-gray-600">
-                Pregunta {currentQuestionIndex + 1} de {totalQuestions}
+            <div className="min-w-0 flex-1">
+              <h1 className="text-sm md:text-2xl font-bold text-gray-900 truncate">{exam.title}</h1>
+              <p className="text-xs md:text-sm text-gray-600">
+                {currentQuestionIndex + 1}/{totalQuestions}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          {/* Derecha - Timer y progreso compacto */}
+          <div className="flex items-center gap-2 md:gap-6 flex-shrink-0">
+            {/* Barra de progreso móvil - muy compacta */}
+            <div className="md:hidden flex flex-col items-center">
+              <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-blue-600 transition-all"
+                  style={{
+                    width: `${((answeredCount + 1) / (totalQuestions + 1)) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Barra de progreso escritorio */}
             <div className="hidden md:flex flex-col items-center">
               <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
                 <div
@@ -321,13 +337,14 @@ export function ExamDetailContent({ examId }: ExamDetailContentProps) {
                 />
               </div>
               <p className="text-xs text-gray-600">
-                {answeredCount} / {totalQuestions} respondidas
+                {answeredCount} / {totalQuestions}
               </p>
             </div>
 
+            {/* Timer */}
             {timeLeft !== null && (
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-blue-600" />
+              <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
+                <Clock className="h-4 md:h-5 w-4 md:w-5 text-blue-600" />
                 <ExamTimer timeLeft={timeLeft} totalSeconds={exam.duration_minutes * 60} />
               </div>
             )}
@@ -335,25 +352,45 @@ export function ExamDetailContent({ examId }: ExamDetailContentProps) {
         </div>
       </div>
 
-      <div className="h-24" />
+      {/* Padding para el header fijo - ajustado para móvil */}
+      <div className="h-14 md:h-20" />
 
+      {/* Contenido principal */}
       <div className="max-w-4xl mx-auto">
+        {/* Pregunta actual */}
         <QuestionCard
           question={currentQuestion}
           selectedAnswer={currentAnswer?.selected_option || null}
           onAnswerSelected={(answer) => handleAnswerSelected(currentQuestion.id, answer)}
         />
 
-        <div className="mt-8 flex items-center justify-between gap-4">
-          <button
-            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="px-6 py-3 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            ← Anterior
-          </button>
+        {/* Botones de navegación - optimizado para móvil */}
+        <div className="mt-6 md:mt-8 flex flex-col gap-4 md:gap-0 md:flex-row md:items-center md:justify-between">
+          {/* Botones previo/siguiente */}
+          <div className="flex gap-2 md:gap-4">
+            <button
+              onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
+              disabled={currentQuestionIndex === 0}
+              className="flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm md:text-base"
+            >
+              ← Anterior
+            </button>
+            <button
+              onClick={() =>
+                setCurrentQuestionIndex(Math.min(totalQuestions - 1, currentQuestionIndex + 1))
+              }
+              className={`flex-1 md:flex-none px-3 md:px-6 py-2.5 md:py-3 ${
+                currentQuestionIndex < totalQuestions - 1
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'hidden'
+              } font-semibold rounded-lg transition-colors text-sm md:text-base`}
+            >
+              Siguiente →
+            </button>
+          </div>
 
-          <div className="flex gap-2 flex-wrap justify-center max-w-sm">
+          {/* Indicador de preguntas - más compacto en móvil */}
+          <div className="hidden md:flex gap-2 flex-wrap justify-center max-w-sm">
             {questions.map((q, idx) => (
               <button
                 key={q.id}
@@ -371,30 +408,41 @@ export function ExamDetailContent({ examId }: ExamDetailContentProps) {
             ))}
           </div>
 
-          {currentQuestionIndex < totalQuestions - 1 ? (
-            <button
-              onClick={() =>
-                setCurrentQuestionIndex(Math.min(totalQuestions - 1, currentQuestionIndex + 1))
-              }
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
-            >
-              Siguiente →
-            </button>
-          ) : (
+          {/* Vista de preguntas en móvil - compacta */}
+          <div className="md:hidden flex gap-1 flex-wrap justify-center">
+            {questions.map((q, idx) => (
+              <button
+                key={q.id}
+                onClick={() => setCurrentQuestionIndex(idx)}
+                className={`w-7 h-7 rounded text-xs font-semibold transition-all ${
+                  idx === currentQuestionIndex
+                    ? 'bg-blue-600 text-white'
+                    : userAnswers.has(q.id)
+                    ? 'bg-green-100 text-green-700 border border-green-300'
+                    : 'bg-gray-200 text-gray-600'
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
+          </div>
+
+          {/* Botón finalizar - full width en móvil */}
+          {currentQuestionIndex === totalQuestions - 1 && (
             <button
               onClick={handleFinishExam}
               disabled={submitting}
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:from-green-400 disabled:to-emerald-400 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+              className="w-full md:w-auto px-3 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:from-green-400 disabled:to-emerald-400 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
             >
               {submitting ? (
                 <>
-                  <Loader className="h-5 w-5 animate-spin" />
+                  <Loader className="h-4 md:h-5 w-4 md:w-5 animate-spin" />
                   Finalizando...
                 </>
               ) : (
                 <>
-                  <CheckCircle2 className="h-5 w-5" />
-                  Finalizar Ensayo
+                  <CheckCircle2 className="h-4 md:h-5 w-4 md:w-5" />
+                  Finalizar
                 </>
               )}
             </button>
